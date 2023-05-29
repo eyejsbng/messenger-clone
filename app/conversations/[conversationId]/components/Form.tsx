@@ -8,7 +8,6 @@ import MessageInput from "./MessageInput";
 import { CldUploadButton } from "next-cloudinary";
 import { useState } from "react";
 import EmojiPicker, { EmojiClickData, EmojiStyle } from "emoji-picker-react";
-import {BsEmojiSmile} from 'react-icons/bs'
 
 const Form = () => {
   const { conversationId } = useConversation();
@@ -26,6 +25,7 @@ const Form = () => {
     setValue('message', prev + emojiData.emoji)
     console.log(prev);
   }
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsSending(true);
     setValue('message', '', { shouldValidate: true});
@@ -41,24 +41,30 @@ const Form = () => {
       conversationId
     })
   }
+  
   return ( 
+    <>
     <div className="py-4 px-4 bg-white border-t flex items-center gap-2 lg:gap-4 w-full">
       <CldUploadButton options={{maxFiles: 1}} onUpload={handleUpload} uploadPreset="cqjictbl">
         <HiPhoto className="text-sky-500 hover:text-sky-400 tansition" size={30}/>
       </CldUploadButton>
-      <span className="select-none press text-2xl cursor-pointer text-sky-500 hover:text-sky-300 hover:scale-110 transition focus:outline-none" onClick={() => setShowEmoji(prevState => !prevState)}>🙂</span>
+      <span className="select-none press text-2xl cursor-pointer text-sky-500 hover:text-sky-300 hover:scale-110 transition focus:outline-none" 
+          onClick={() => setShowEmoji(prevState => !prevState)}>
+          🙂
+      </span>
       <div className={`transition absolute bottom-20 ${showEmoji ? 'block' : 'hidden'}`}>
         <EmojiPicker onEmojiClick={emojiClick} autoFocusSearch={false} emojiStyle={EmojiStyle.FACEBOOK}/> 
       </div>
       <fieldset className="w-full" disabled={isSending}>
         <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-2 lg:gap-4 w-full">
-          <MessageInput id="messsage" register={register} errors={errors} required placeholder="Write a message."/>
+          <MessageInput id="message" register={register} errors={errors} required placeholder="Write a message."/>
           <button type="submit">
           <HiPaperAirplane size={30} className="text-sky-500 hover:text-sky-300"/>
         </button>
         </form>
       </fieldset>
     </div>
+    </>
   )
 }
 

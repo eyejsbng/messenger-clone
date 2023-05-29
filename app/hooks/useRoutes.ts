@@ -1,9 +1,10 @@
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { HiChat } from "react-icons/hi"
-import { HiArrowLeftOnRectangle, HiUsers } from 'react-icons/hi2';
+import { HiArrowLeftOnRectangle } from 'react-icons/hi2'
+import { HiOutlineChatAlt2 } from 'react-icons/hi'
 import { signOut } from "next-auth/react";
 import useConversation from "./useConversation";
+import { TbUsers } from "react-icons/tb"
 
 const useRoutes = () => {
   const pathname = usePathname();
@@ -13,13 +14,13 @@ const useRoutes = () => {
     {
       label: 'Chat',
       href: '/conversations',
-      icon: HiChat,
+      icon: HiOutlineChatAlt2,
       active: pathname === '/conversations' || !!conversationId
     },
     {
       label: 'Users',
       href: '/users',
-      icon: HiUsers,
+      icon: TbUsers,
       active: pathname === '/users'
     },
     {
